@@ -1,0 +1,244 @@
+              INSTALLING DEVOPS TOOLS
+1. Install  openSSH Server
+openSSH allows secure remote access to your server.
+                  commands
+sudo apt update 
+sudo apt install openssh-server -y
+sudo systemctl enable ssh
+sudo systemctl start ssh
+sudo systemctl status ssh(verify installation:SSH server running).
+
+2.Install Git
+git is essential for version control.
+         commands
+sudo apt update 
+sudo apt install git -y
+git --version(verify installation:check git version)
+
+3.Install Docker
+Docker helps in containerizing applications.
+             commands
+sudo apt remove docker docker-engine docker.io containerd runc(removing older versions of docker if any).
+            Install Docker Dependencies
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+            Add docker GPG key and repository
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+           Install Docker
+sudo apt update 
+sudo apt install docker-ce docker-ce-cli containerd.io -y
+docker --version(verify installation)
+       start and enable Docker
+sudo systemctl start docker 
+suco  systemctl enable docker
+newgrp docker(This refreshes your group membership without requiring a full logout)
+
+
+4.Install Kubernetes (Kuberctl)
+Kubernetes is for container orchestration.
+           commands
+Add kubernetes repository
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/kubernetes-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+        Install kubectl
+sudo apt update 
+sudo apt install -y kubectl
+   or
+sudo snap install kubectl --classic
+kubectl version --client(verify installation)
+
+
+5. Install Terraform
+Terraform is used for infrastructure automation.
+              commands
+          Download Terraform
+wget https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip
+                      or
+ curl -O https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip
+
+           Unzip and move to a system path
+sudo apt install unzip -y
+unzip terraform_1.5.0_linux_amd64.zip
+sudo mv terraform /usr/local/bin/.
+sudo snap install terraform --classic
+terraform --version(verify instaalation).
+
+
+6. Install Visual Studio Code (VSCode)
+VS Code is a popular code editor.
+           commands
+     Download and install Microsoft GPG Key
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+      Add VS Code repository
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
+      Install VS Code
+sudo apt update 
+sudo apt install code -y
+code(verify installation)
+
+            MINIKUBE INSTALLATION
+                commands
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+      POST-INSTALLATION CHECKLIST
+Add your user to the docker group to run Docker without sduo.
+                 commands
+sudo usermod -aG docker $USER
+
+
+
+          EXPLANATION OF THE COMMANDS TO INSTALL EACH TOOLS
+
+sudo apt update: updates  the list of avaliable packages and their versions.
+sudo systemctl enable ssh:Ensures the SSH service starts automatically on boot.
+sudo apt update: Refreshes the list of packages (this should always be run before installing new software).
+apt-transport-https: Enables the use of HTTPS for APT repositories.
+ca-certificates: Ensures trusted SSL certificates are used.
+curl: A tool to transfer data (used here to download Docker's GPG key).
+software-properties-common: provides tools to manage software sources.
+docker-ce: Community Edition(main Docker Engine).
+docker-ce-cli: Command-Line tools for Docker.
+containerd.io: Container runtime required by Docker.
+         START AND ENABLE DOCKER
+sudo systemctl start docker
+sudo systemctl enable docker
+            ADD KUBERNETES REPOSAITORY
+curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/kubernetes-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+THIS UP 
+ Downloads and adds the kubernetes GPG key for package verification.
+Adds kubernetes official repository to the system.
+ 
+       INSTALL KUBECTL
+sudo apt install -y kubectl: Installs kubectl, the command-line for kubernetes.
+    
+  DOWNLOAD TERRAFORM
+wget:A command-line tool for downloading files from the internet.
+Dowqnload the spewcified terraform version zip file.
+unzip: extracts the downloaded ZIP file.
+sudo mv:Moves the Terraform binary to /usr/loacl/bin/, a directory included in the system's PATH.
+              DOWNLOAD AND ADD MICROSOFT GPG KEY
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -o root -g root -m 644 packages.microsoft.gpg /usr/share/keyrings/
+
+downloads microsoft,s GPG key and saves it securely for verifying package authenticity.
+
+
+
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" | sudo tee /etc/apt/sources.list.d/vscode.list
+
+
+Adds VS Code,s repository to your package manager for easy intallation.
+ 
+
+7.   INSTALL GOOGLE CHROME
+
+ Download the chrome .deb file
+         commands 
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+
+ Install the .deb file: Use dpkg to install it.
+                commands
+sudo apt install ./google-chrome-stable_current_amd64.deb
+
+NOTE: If there are dependency issues, fix them with:
+sudo apt --fix-broken install
+     Launch Chrome:google-chrome
+
+
+
+
+DOWNLOAD THE LATEST VERSION OF TERRAFORM
+wget https://releases.hashicorp.com/terraform/LATEST_VERSION/terraform_LATEST_VERSION_linux_amd64.zip
+
+REMOVE THE EXISTING TERRAFORM BINARY
+sudo rm /usr/local/bin/terraform
+
+  UNZIP THE NEW TERRAFORM BINARY
+sudo apt install unzip -y  # Install unzip if not already installed
+unzip terraform_LATEST_VERSION_linux_amd64.zip
+
+
+MOVE THE NEW BINARY TO THE CORRECT PATH
+sudo mv terraform /usr/local/bin
+  VERIFY THE NEW VERSION
+terraform version
+
+N/B you can specify the version on the download link where the write LATEST_VERSION you can replace it there.
+ 
+
+
+
+
+8.      INSTALL AWS CLI
+The AWS CLI allows you to to manage AWS services from the command line.
+
+Update the system
+      commands
+sudo apt update
+sudo apt upgrade -y
+
+Download the AWS CLI installer:
+             commads
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+
+Install unzip if not already installed:
+         commands
+    sudo apt install unzip -y
+
+Unzip the AWS CLI installer:
+       commands
+   unzip awscliv2.zip
+
+Run the installer:
+   commands
+ sudo ./aws/install
+
+VAerify the installation:
+    commands
+ aws --version
+
+Clean Up:Remove the downloaded installer to save space
+       commands
+ rm -rf awscliv2.zip aws
+
+
+
+
+        CONFIGURATION ON AWS CLI
+
+               commands
+
+aws configure
+
+You will be prompted to provide:
+
+1.Access Key ID
+2.Secret Access Key
+3.Default Region
+4.Default Output Format (e.g, JSON, table)
+
+
+
+
+     CLEAN UP OTHER DOWNLOADED FILES
+
+
+rm -rf terraform_*.zip
+rm -rf google-chrome-stable_current_amd64.deb
+rm -rf docker*.deb
+
+
+rm: Removes files and directories
+-r: Recursively deletes directories and their contents
+-f: Forces deletion without confirmation.
+
+
+NOTE:  Be careful with rm -rf, as it permanently deletes files.
+use ls first to list files before deleting.
+            commands
+ls -lh --- command used to list files and directories in  the current directory with detailed infromatin in a human-readable format.
